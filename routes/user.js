@@ -4,7 +4,7 @@ import { checkAuthMiddleware, createJSONToken, hashPassword } from '../utils/aut
 
 const router = express.Router();
 
-router.post('/register', async (req, res, next) => {
+router.post('/auth/register', async (req, res, next) => {
 	const username = req.body.username;
 	const password = req.body.password;
 	const passwordConfirm = req.body.passwordConfirm;
@@ -32,8 +32,7 @@ router.post('/register', async (req, res, next) => {
 	res.status(200).json({ token });
 });
 
-router.post('/login', async (req, res) => {
-	console.log('INCOM', req);
+router.post('/auth/login', async (req, res) => {
 	const username = req.body.username;
 	const password = req.body.password;
 	const usersFound = await get(username);
@@ -61,7 +60,7 @@ router.post('/login', async (req, res) => {
 	});
 });
 
-router.get('/users', async (req, res) => {
+router.get('/auth/users', async (req, res) => {
 	const existingUsers = await getAll();
 
 	const users = existingUsers.map((user) => ({
@@ -74,15 +73,14 @@ router.get('/users', async (req, res) => {
 	res.status(200).json(users);
 });
 
-router.post('/checkuser', async (req, res) => {
+router.post('/auth/checkuser', async (req, res) => {
+	console.log('CheckUser');
 	checkAuthMiddleware(req, res, async () => {
 		const username = req.decodedUser.username;
-		console.log('B', username);
 
 		const users = await get(username);
 		const user = users[0];
 
-		console.log('S', user);
 		res.status(200).json({
 			name: user.Name,
 			username: user.UserID,

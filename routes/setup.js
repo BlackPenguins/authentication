@@ -3,7 +3,7 @@ import { createTables } from '../database/utils.js';
 
 const router = express.Router();
 
-router.post('/setup/createTables', async (req, res) => {
+router.post('/auth/setup/createTables', async (req, res) => {
 	const createPromise = createTables();
 
 	createPromise.then(

@@ -19,11 +19,11 @@ const verifyJSONToken = (token) => {
 };
 
 export const checkAuthMiddleware = (req, res, next) => {
-	console.log('D', req.headers);
 	if (req.method === 'OPTIONS') {
 		return next();
 	}
 	if (!req.headers.authorization) {
+		console.log('No header.');
 		return res.status(401).json({
 			message: 'Not Authorized. No authentication header.',
 		});
@@ -31,6 +31,7 @@ export const checkAuthMiddleware = (req, res, next) => {
 	const authFragments = req.headers.authorization.split(' ');
 
 	if (authFragments.length !== 2) {
+		console.log('No token.');
 		return res.status(401).json({
 			message: 'Not Authorized. Authentication header is invalid.',
 		});
@@ -39,10 +40,13 @@ export const checkAuthMiddleware = (req, res, next) => {
 	try {
 		req.decodedUser = verifyJSONToken(authToken);
 	} catch (error) {
+		console.log('Bad token.');
 		return res.status(401).json({
 			message: 'Not Authorized. Token is invalid.',
 		});
 	}
+
+	console.log('Permission Granted.');
 
 	next();
 };

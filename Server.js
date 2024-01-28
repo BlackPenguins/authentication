@@ -21,7 +21,7 @@ const app = express();
 
 app.use(
 	cors({
-		origin: 'http://frontend:3000',
+		origin: 'http://yap-frontend:3000',
 	})
 );
 

@@ -70,6 +70,7 @@ router.get('/auth/users', async (req, res) => {
 		name: user.Name,
 	}));
 
+	console.log('Current Users', users);
 	res.status(200).json(users);
 });
 
@@ -83,8 +84,8 @@ router.post('/auth/checkuser', async (req, res) => {
 
 		res.status(200).json({
 			name: user.Name,
-			username: user.UserID,
-			userID: user.UserName,
+			username: user.UserName,
+			userID: user.UserID,
 			isAdmin: user.IsAdmin,
 		});
 	});

@@ -6,12 +6,18 @@ let _db = null;
 export const initializeDB = () => {
 	dotenv.config();
 
+	console.log('Connecting to Database...', {
+		host: process.env.MYSQL_HOST,
+		port: process.env.MYSQL_PORT,
+		database: process.env.MYSQL_DATABASE,
+	});
+
 	const db = mysql.createConnection({
-		port: process.env.DB_PORT,
-		host: process.env.DB_HOST,
-		user: process.env.DB_USER,
-		password: process.env.DB_PASSWORD,
-		database: process.env.AUTHENTICATION_DATABASE,
+		port: process.env.MYSQL_PORT,
+		host: process.env.MYSQL_HOST,
+		user: process.env.MYSQL_ROOT_USER,
+		password: process.env.MYSQL_ROOT_PASSWORD,
+		database: process.env.MYSQL_DATABASE,
 	});
 
 	db.connect((error) => {

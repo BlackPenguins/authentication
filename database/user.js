@@ -4,7 +4,7 @@ const db = getDB();
 
 export const get = (userName) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM User WHERE UserName = ?', [userName], (error, result) => {
+		db.query('SELECT * FROM user WHERE UserName = ?', [userName], (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {
@@ -16,7 +16,7 @@ export const get = (userName) => {
 
 export const getAll = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM User', (error, result) => {
+		db.query('SELECT * FROM user', (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {
@@ -28,7 +28,7 @@ export const getAll = () => {
 
 export const insert = (userName, passwordHashed, name) => {
 	return new Promise((resolve, reject) => {
-		db.query('INSERT INTO User (UserName, Password, Name) VALUES (?,?,?)', [userName, passwordHashed, name], (error, result) => {
+		db.query('INSERT INTO user (UserName, Password, Name) VALUES (?,?,?)', [userName, passwordHashed, name], (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {

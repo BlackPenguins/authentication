@@ -16,12 +16,12 @@ import cors from 'cors';
 
 dotenv.config();
 
-const PORT = process.env.AUTHENTICATION_PORT;
+const PORT = process.env.AUTH_PORT;
 const app = express();
 
 app.use(
 	cors({
-		origin: 'http://localhost:3000',
+		origin: 'http://frontend:3000',
 	})
 );
 

@@ -16,12 +16,18 @@ import cors from 'cors';
 
 dotenv.config();
 
-const PORT = process.env.AUTH_PORT;
+const PORT = process.env.AUTH_BACKEND_PORT;
 const app = express();
 
 app.use(
 	cors({
-		origin: 'http://yap-frontend:3000',
+		origin: 'http://yap-frontend:3100',
+	}),
+	cors({
+		origin: 'http://gelman-frontend:5100',
+	}),
+	cors({
+		origin: 'http://mangia-frontend:6100',
 	})
 );
 

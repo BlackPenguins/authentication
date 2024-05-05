@@ -1,10 +1,22 @@
-import { getDB } from './utils.js';
+import { getPool } from './utils.js';
 
-const db = getDB();
+const pool = getPool();
 
 export const get = (userName) => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM user WHERE UserName = ?', [userName], (error, result) => {
+		pool.query('SELECT * FROM user WHERE UserName = ?', [userName], (error, result) => {
+			if (error) {
+				return reject(error.sqlMessage);
+			} else {
+				return resolve(result);
+			}
+		});
+	});
+};
+
+export const updateWithLogin = (userName) => {
+	return new Promise((resolve, reject) => {
+		pool.query('UPDATE user SET LastLogin = now(), TotalLogins = TotalLogins + 1 WHERE UserName = ?', [userName], (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {
@@ -16,7 +28,7 @@ export const get = (userName) => {
 
 export const getAll = () => {
 	return new Promise((resolve, reject) => {
-		db.query('SELECT * FROM user', (error, result) => {
+		pool.query('SELECT * FROM user', (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {
@@ -28,7 +40,7 @@ export const getAll = () => {
 
 export const insert = (userName, passwordHashed, name) => {
 	return new Promise((resolve, reject) => {
-		db.query('INSERT INTO user (UserName, Password, Name) VALUES (?,?,?)', [userName, passwordHashed, name], (error, result) => {
+		pool.query('INSERT INTO user (UserName, Password, Name) VALUES (?,?,?)', [userName, passwordHashed, name], (error, result) => {
 			if (error) {
 				return reject(error.sqlMessage);
 			} else {

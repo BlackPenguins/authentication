@@ -1,5 +1,5 @@
 import express from 'express';
-import { get, insert, getAll } from '../database/user.js';
+import { get, insert, getAll, updateWithLogin } from '../database/user.js';
 import { checkAuthMiddleware, createJSONToken, hashPassword } from '../utils/auth.js';
 
 const router = express.Router();
@@ -54,6 +54,10 @@ router.post('/auth/login', async (req, res) => {
 	}
 
 	const token = createJSONToken(usersFound[0]);
+
+	console.log('Updating Login');
+
+	await updateWithLogin(username);
 
 	return res.status(200).json({
 		token,

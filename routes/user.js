@@ -1,7 +1,7 @@
 import express from 'express';
 import nodemailer from 'nodemailer';
 import { get, insert, getAll, updateWithLogin, update, setTempPassword, getByEmail } from '../database/user.js';
-import { checkAuthMiddleware, createJSONToken, hashPassword } from '../backend/utils/auth.js';
+import { checkAuthMiddleware, createJSONToken, hashPassword } from '../utils/auth.js';
 
 const router = express.Router();
 

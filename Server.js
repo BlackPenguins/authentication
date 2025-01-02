@@ -1,7 +1,6 @@
 import dotenv from 'dotenv';
 import express from 'express';
-import userRoutes from './routes/user.js';
-import setupRoutes from './routes/setup.js';
+import userRoutes from '../routes/user.js';
 
 import cors from 'cors';
 
@@ -19,17 +18,31 @@ dotenv.config();
 const PORT = process.env.AUTH_BACKEND_PORT;
 const app = express();
 
-app.use(
-	cors({
-		origin: 'http://yap-frontend:3100',
-	}),
-	cors({
-		origin: 'http://gelman-frontend:5100',
-	}),
-	cors({
-		origin: 'http://mangia-frontend:6100',
-	})
-);
+const allowedOrigins = [
+	'http://localhost:3000',
+	'http://yap-frontend:3100',
+	'http://localhost:3100',
+	'http://gelman-frontend:5100',
+	'http://mangia-frontend:6100',
+	`http://auth-frontend:${process.env.AUTH_FRONTEND_PORT}`,
+];
+
+const corsOptions = {
+	origin: function (origin, callback) {
+		// Allow requests with no origin (like mobile apps or curl requests)
+		if (!origin) return callback(null, true);
+		if (allowedOrigins.indexOf(origin) !== -1) {
+			callback(null, true);
+		} else {
+			callback(new Error(`Not allowed by CORS: [${origin}]`));
+		}
+	},
+	methods: ['GET', 'POST', 'PUT', 'DELETE'],
+	allowedHeaders: ['Content-Type', 'Authorization'],
+	credentials: true, // Enable Access-Control-Allow-Credentials
+};
+
+app.use(cors(corsOptions));
 
 // Does the parsing for the req.body
 app.use(express.json());
@@ -39,4 +52,3 @@ app.listen(PORT, () => {
 });
 
 app.use(userRoutes);
-app.use(setupRoutes);

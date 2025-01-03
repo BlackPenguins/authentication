@@ -19,10 +19,14 @@ const PORT = process.env.AUTH_BACKEND_PORT;
 const app = express();
 
 const allowedOrigins = [
+	'http://yap.penguinore.net',
+	'http://mangia.penguinore.net',
 	'http://localhost:3000',
+	'http://localhost:6100',
 	'http://yap-frontend:3100',
 	'http://localhost:3100',
 	'http://gelman-frontend:5100',
+	'http://mangia-frontend:6100',
 	'http://mangia-frontend:6100',
 	`http://auth-frontend:${process.env.AUTH_FRONTEND_PORT}`,
 ];
